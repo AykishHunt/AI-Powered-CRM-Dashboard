@@ -1,12 +1,16 @@
 import express from 'express';
-import { getContacts, createContact, updateContact, deleteContact, getContact} from '../controllers/contactController.js';
+import { getContacts, createContact, updateContact, deleteContact, getContact, restoreContact, getStats} from '../controllers/contactController.js';
 import  {protect}  from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
+router.get('/stats', protect, getStats)
+
 router.route('/')
   .get(protect, getContacts)
   .post(protect, createContact);
+
+router.put('/restore/:id', protect, restoreContact)
 
 router.route('/:id')
   .get(protect, getContact)
